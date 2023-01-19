@@ -1,10 +1,9 @@
 <?php
 
-class Home extends Controller{
+class Complaints extends Controller{
     public function index(){
-        Middleware::auth();
         $this->view("templates/header");
-        $this->view("home/index");
+        $this->view("complaints/index");
         $this->view("templates/footer");
     }
 }
