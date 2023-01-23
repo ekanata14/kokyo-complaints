@@ -2,13 +2,15 @@
 
 class Auth extends Controller{
     public function index(){
-        $this->view("templates/header");
+        $data['title'] = "Authorization";
+        $this->view("templates/header", $data);
         $this->view("auth/login");
         $this->view("templates/footer");       
     }
 
     public function register(){
-        $this->view("templates/header");
+        $data['title'] = "Authorization";
+        $this->view("templates/header", $data);
         $this->view("auth/register");
         $this->view("templates/footer");
     }
@@ -21,20 +23,28 @@ class Auth extends Controller{
         }
     }
 
-    public function loginUser(){
-        if($this->model("Masyarakat_model")->loginByNIK($_POST) > 0){
-            $masyarakat = $this->model("Masyarakat_model")->getDataMasyarakat($_POST);
-            $_SESSION = [
-                'nik' => $masyarakat['nik'],
-                'nama' => $masyarakat['nama'],
-                'username' => $masyarakat['username'],
-                'telp' => $masyarakat['telp'],
-                'status' => 'login'
-            ];
-            header("Location: " . BASE_URL . "/home");
+    public function loginUser(){       
+        $masyarakat = $this->model("Masyarakat_model")->getDataMasyarakat($_POST);
+        if (password_verify($_POST['password'], $masyarakat['password'])) {
+            $password = $masyarakat['password'];
+            if ($this->model("Masyarakat_model")->loginByNIK($_POST, $password) > 0) {
+            var_dump($masyarakat['password']);
+                $_SESSION = [
+                    'nik' => $masyarakat['nik'],
+                    'nama' => $masyarakat['nama'],
+                    'username' => $masyarakat['username'],
+                    'telp' => $masyarakat['telp'],
+                    'status' => 'login'
+                ];
+                unset($_POST);
+                header("Location: " . BASE_URL . "/home");
+            } else {
+                echo "DOESN'T MATCH"; 
+            }
         } else{
-            header("Location: " . BASE_URL . "/auth");
+            echo "DECRYPT FAILED"; 
         }
+
     }
 
     public function logout(){

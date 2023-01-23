@@ -1,9 +1,10 @@
 <?php
 
 class Home extends Controller{
-    public function index(){
-        Middleware::auth();
-        $this->view("templates/header");
+    public function index(){ 
+        $data['title'] = "Home";
+        $this->view("templates/header", $data);
+        $this->view("templates/navbar");
         $this->view("home/index");
         $this->view("templates/footer");
     }
