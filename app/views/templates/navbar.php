@@ -7,7 +7,7 @@
                     <ul class="navbar-nav ms-auto my-2 my-lg-0 d-flex align-items-center">
                         <li class="nav-item"><a class="nav-link" href="#about">Tentang</a></li>
                         <li class="nav-item"><a class="nav-link" href="#report">Lapor</a></li>
-                        <?php if($_SESSION['status'] == "login"){?>
+                        <?php if(!$_SESSION['status'] == "login"){?>
                         <li class="nav-item"><a href="<?= BASE_URL ?>/auth" class="btn btn-primary">Login</a></li>
                         <?php } else {}?>
                     </ul>
