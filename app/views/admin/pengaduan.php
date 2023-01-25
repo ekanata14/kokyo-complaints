@@ -110,9 +110,16 @@
                     <h5 class="font-weight-bolder"><?= $pengaduan['nama']?></h5>
                     <p class="mb-5"><?= $pengaduan['isi_laporan']?></p>
                     <div class="action d-flex gap-2">
-                        <form action="<?= BASE_URL ?>/admin/pengaduanProses" method="POST">
+                        <form action="<?= BASE_URL ?>/admin/pengaduanBatal" method="POST">
                             <input type="hidden" name="id_pengaduan" value="<?= $pengaduan['id_pengaduan']?>">
                             <button class="btn btn-danger text-md text-white font-weight-bold mb-0 icon-move-right mt-auto" type="submit">
+                              Batal
+                              <i class="fas fa-x text-sm ms-1" aria-hidden="true"></i>
+                            </button>  
+                        </form>
+                        <form action="<?= BASE_URL ?>/admin/pengaduanProses" method="POST">
+                            <input type="hidden" name="id_pengaduan" value="<?= $pengaduan['id_pengaduan']?>">
+                            <button class="btn btn-warning text-md text-white font-weight-bold mb-0 icon-move-right mt-auto" type="submit">
                               Diproses
                               <i class="fas fa-cog text-sm ms-1" aria-hidden="true"></i>
                             </button>  

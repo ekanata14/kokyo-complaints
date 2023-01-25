@@ -17,9 +17,11 @@ class Complaints extends Controller{
         $foto = DIR_FOLDER . $file_name;
         move_uploaded_file($_FILES['foto']['tmp_name'], $foto);
         if($this->model("Pengaduan_model")->addPengaduan($_POST, $data['foto']) > 0){
-            header("Location: " . BASE_URL . "/home#report");
+            Flasher::setFlash("Pengaduan Berhasil", "Dikirimkan", "success", "center");
+            Redirect::to("home#report");
         } else{
-            header("Location: " . BASE_URL . "/home#report");
+            Flasher::setFlash("Pengaduan Gagal", "Dikirimkan", "danger", "center");
+            Redirect::to("home#report");
         }
     }
 }

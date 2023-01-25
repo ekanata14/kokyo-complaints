@@ -36,6 +36,7 @@
                         <p class="text-muted mb-5">Jika Anda punya keluhan, silahkan laporkan dibawah ini</p>
                     </div>
                 </div>
+                <?php Flasher::flash()?>
                 <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
                     <div class="col-lg-6">
                         <!-- * * * * * * * * * * * * * * *-->

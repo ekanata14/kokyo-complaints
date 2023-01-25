@@ -140,15 +140,20 @@
                                     <td><?= $petugas['nama_petugas']?></td>
                                     <td><?= $petugas['username']?></td>
                                     <td><?= $petugas['telp']?></td>
-                                    <td><?= $petugas['level']?></td>
-                                    <td>Action</td>
+                                    <td><?= ($petugas['level'] == 0) ? 'Admin' : 'Petugas'?></td>
+                                    <td class="d-flex gap-2">
+                                      <button id="buttonEditPetugas" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editPetugas" data-id="<?= $petugas['id_petugas']?>" data-nama-petugas="<?= $petugas['nama_petugas']?>" data-username="<?= $petugas['username']?>" data-telp="<?= $petugas['telp']?>" data-level="<?= $petugas['level']?>">Edit</button>
+                                      <form action="<?= BASE_URL?>/admin/hapusPetugas" method="POST">
+                                        <input type="hidden" name="id_petugas" value="<?= $petugas['id_petugas']?>">
+                                        <button class="btn btn-danger" type="submit" onclick="return confirm('Apakah Anda yakin?')">Delete</button>
+                                      </form>
+                                    </td>
                                 </tr>
                                 <?php $i++ ?>
                                 <?php endforeach?>
                             </tbody>
                         </table>
                     </div>
-
               </div>
             </div>
           </div>
@@ -255,12 +260,12 @@
     </div>
   </div>
 
-<!-- Modal -->
+<!-- Tambah Petugas Modal -->
 <div class="modal fade" id="tambahPetugas" tabindex="-1" aria-labelledby="tambahPetugasLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="tambahPetugasLabel">Modal title</h1>
+        <h1 class="modal-title fs-5" id="tambahPetugasLabel">Tambah Petugas</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -284,8 +289,48 @@
         <div class="form-group">
           <label for="telp">Level</label>
           <select name="level" id="level" class="form-select">
-            <option value="admin">Admin</option>
-            <option value="petugas">Petugas</option>
+            <option value="0">Admin</option>
+            <option value="1">Petugas</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Petugas Modal -->
+<div class="modal fade" id="editPetugas" tabindex="-1" aria-labelledby="editPetugasLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="editPetugasLabel">Edit Petugas</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="<?= BASE_URL?>/admin/editPetugas" method="POST">
+        <input type="hidden" id="idPetugas" name="id_petugas">
+        <div class="form-group">
+          <label for="nama_petugas">Nama Petugas</label>
+          <input type="text" name="nama_petugas" class="form-control" id="namaPetugas">
+        </div>
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" name="username" class="form-control" id="username">
+        </div>
+        <div class="form-group">
+          <label for="telp">Telp</label>
+          <input type="number" name="telp" class="form-control" id="telp">
+        </div>
+        <div class="form-group">
+          <label for="telp">Level</label>
+          <select name="level" id="level" class="form-select" id="level">
+            <option value="0">Admin</option>
+            <option value="1">Petugas</option>
           </select>
         </div>
       </div>

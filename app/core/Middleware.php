@@ -2,8 +2,8 @@
 
 class Middleware{
     public static function auth(){
-        if($_SESSION['status'] != 'login'){
-            header("Location:" . BASE_URL . "/auth");
+        if($_SESSION['user']['login'] != true || $_SESSION['user']['login'] != true){
+            Redirect::to("/auth");
         }
     }
 }

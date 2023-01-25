@@ -17,11 +17,11 @@ class Auth extends Controller{
 
     public function regisUser(){
         if($this->model("Masyarakat_model")->addMasyarakat($_POST) > 0){
-            Flasher::setFlash("Register", "Berhasil", "success");
-            header("Location: " . BASE_URL . "/auth");
+            Flasher::setFlash("Register", "Berhasil", "success", "center");
+            Redirect::to("auth");
         } else{
-            Flasher::setFlash("Register", "Gagal", "danger");
-            header("Location: " . BASE_URL . "/auth/register");
+            Flasher::setFlash("Register", "Gagal", "danger", "center");
+            Redirect::to("auth/register");
         }
     }
 
@@ -32,7 +32,7 @@ class Auth extends Controller{
             $passwordMasyarakat = $masyarakat['password'];
             $passwordPetugas = $petugas['password'];
             if ($this->model("Masyarakat_model")->loginByNIK($_POST, $passwordMasyarakat) > 0) {
-                $_SESSION = [
+                $_SESSION['user'] = [
                     'nik' => $masyarakat['nik'],
                     'nama' => $masyarakat['nama'],
                     'username' => $masyarakat['username'],
@@ -40,22 +40,24 @@ class Auth extends Controller{
                     'login' => true
                 ];
                 unset($_POST);
-                header("Location: " . BASE_URL . "/home");
+                Redirect::to("home");
+                exit;
             } else if($this->model("Petugas_model")->loginPetugas($_POST, $passwordPetugas) > 0){
-                $_SESSION['petugas'] = [
+                $_SESSION['user'] = [
                     'name' => $petugas['nama_petugas'],
                     'username' => $petugas['username'],
                     'telp' => $petugas['telp'],
                     'login' => true
                 ];
                 unset($_POST);
-                header("Location: " . BASE_URL . "/admin");
+                Redirect::to("admin");
             } else {
-                Flasher::setFlash("Login", "Gagal", "danger");
-                header("Location: " . BASE_URL . "/auth");
+                Flasher::setFlash("Login", "Gagal", "danger", "center");
+                Redirect::to("auth");
             }
         } else{
-            Flasher::setFlash("Login", "Gagal", "danger");
+            Flasher::setFlash("Login", "Gagal", "danger", "center");
+            Redirect::to("auth");
         }
 
     }
@@ -64,5 +66,6 @@ class Auth extends Controller{
         session_destroy();
         session_unset();
         header("Location: " . BASE_URL . "/auth");
+        exit;
     }
 }

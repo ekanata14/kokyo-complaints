@@ -70,6 +70,12 @@ class Pengaduan_model{
         return $this->db->rowCount();
        }
 
+    public function pengaduanBatal($data){
+        $this->db->query("UPDATE {$this->table} SET status = '0' WHERE id_pengaduan = :id_pengaduan");
+        $this->db->bind("id_pengaduan", $data['id_pengaduan']);
+        return $this->db->rowCount();
+    }
+
     public function pengaduanProses($data){
         $this->db->query("UPDATE {$this->table} SET status = 'proses' WHERE id_pengaduan = :id_pengaduan");
         $this->db->bind("id_pengaduan", $data['id_pengaduan']);
